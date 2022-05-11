@@ -561,3 +561,25 @@ function generateLayouts() {
         else button.innerHTML = keys[i].layout_caps_ru;
     }
 }
+
+document.onclick = function (event) {
+    document.querySelector("textarea").focus();
+};
+
+document.addEventListener("keydown", (event) => {
+    const btn = document.querySelector(`.${event.code}`);
+    if (manageBtns.indexOf(event.code) == -1 && localStorage.getItem('lang') == "en" && !caps && typeof keys.find(el => el.layout == event.key) === "undefined") {
+        localStorage.lang = 'ru';
+        generateLayouts();
+    }
+    else if (manageBtns.indexOf(event.code) == -1 && localStorage.getItem('lang') == "ru" && !caps && typeof keys.find(el => el.layout_ru == event.key) === "undefined") {
+        localStorage.lang = 'en';
+        generateLayouts();
+    }
+    btnDown(btn);
+});
+
+document.addEventListener("keyup", (event) => {
+    const btn = document.querySelector(`.${event.code}`);
+    btnUp(btn);
+});
