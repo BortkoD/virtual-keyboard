@@ -407,7 +407,7 @@ const textField = document.createElement("textarea");
 const keyboard = document.createElement("div");
 keyboard.classList.add("keyboard");
 
-let keyboardRow = document.createElement("div");
+var keyboardRow = document.createElement("div");
 keyboardRow.classList.add("keyboard-row");
 
 keyboard.appendChild(keyboardRow);
@@ -437,10 +437,9 @@ body.appendChild(footer);
 
 const textarea = document.querySelector("textarea").focus();
 
-
 for (let i = 0; i < keys.length; i++) {
     if (i == 14 || i == 29 || i == 42 || i == 54) {
-        let keyboardRow = document.createElement("div");
+        var keyboardRow = document.createElement("div");
         keyboardRow.classList.add("keyboard-row");
         keyboard.appendChild(keyboardRow);
     }
