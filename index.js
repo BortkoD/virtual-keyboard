@@ -440,7 +440,7 @@ const textarea = document.querySelector("textarea").focus();
 
 for (let i = 0; i < keys.length; i++) {
     if (i == 14 || i == 29 || i == 42 || i == 54) {
-        var keyboardRow = document.createElement("div");
+        let keyboardRow = document.createElement("div");
         keyboardRow.classList.add("keyboard-row");
         keyboard.appendChild(keyboardRow);
     }
@@ -455,10 +455,22 @@ for (let i = 0; i < keys.length; i++) {
         upButton.classList.add("keyboard-button", "ArrowUp", "image-button");
         upButton.style.height = "20px";
         upButton.style.backgroundImage = "url('./assets/svg/up-arrow.svg')";
+        upButton.addEventListener("mousedown", (event) => {
+            btnDown(upButton);
+        });
+        upButton.addEventListener("mouseup", (event) => {
+            btnUp(upButton);
+        });
 
         downButton.classList.add("keyboard-button", "ArrowDown", "image-button");
         downButton.style.height = "20px";
         downButton.style.backgroundImage = "url('./assets/svg/down-arrow.svg')";
+        downButton.addEventListener("mousedown", (event) => {
+            btnDown(downButton);
+        });
+        downButton.addEventListener("mouseup", (event) => {
+            btnUp(downButton);
+        });
 
         button.appendChild(upButton);
         button.appendChild(downButton);
@@ -476,6 +488,25 @@ for (let i = 0; i < keys.length; i++) {
             button.style.backgroundImage = keys[i].img;
             button.classList.add("image-button");
         }
+
+        button.addEventListener("mousedown", (event) => {
+            console.log(event.target);
+            if (manageBtns.indexOf(event.target.innerHTML) == -1) {
+                if (localStorage.getItem('lang') == "en" && !caps) textField.value = textField.value + keys[i].layout;
+                else if (localStorage.getItem('lang') == "en" && caps) textField.value = textField.value + keys[i].layout_caps;
+                else if (localStorage.getItem('lang') == "ru" && !caps) textField.value = textField.value + keys[i].layout_ru;
+                else textField.value = textField.value + keys[i].layout_caps_ru;
+            }
+            else if (event.target.innerHTML === "  ") textField.value = textField.value + "\n";
+            else if (event.target.innerHTML === "Tab") textField.value = textField.value + "    ";
+            else if (event.target.innerHTML === "") textField.value = textField.value.slice(0, -1);
+            else if (event.target.innerHTML === " ") textField.value = textField.value + " ";
+            btnDown(button);
+        });
+
+        button.addEventListener("mouseup", (event) => {
+            btnUp(button);
+        });
     }
 
     keyboardRow.appendChild(button);
