@@ -549,8 +549,15 @@ function btnUp(btn) {
 }
 
 function generateLayouts() {
+    if (!localStorage.hasOwnProperty('lang')) localStorage.setItem('lang', 'en');
+    if (shift && alt && localStorage.getItem('lang') == "en") localStorage.lang = 'ru';
+    else if (shift && alt && localStorage.getItem('lang') == "ru") localStorage.lang = 'en';
+
     for (let i = 0; i < keys.length; i++) {
         let button = document.querySelector(`.${keys[i].code}`);
-        button.innerHTML = keys[i].layout;
+        if (localStorage.getItem('lang') == "en" && !caps) button.innerHTML = keys[i].layout;
+        else if (localStorage.getItem('lang') == "en" && caps) button.innerHTML = keys[i].layout_caps;
+        else if (localStorage.getItem('lang') == "ru" && !caps) button.innerHTML = keys[i].layout_ru;
+        else button.innerHTML = keys[i].layout_caps_ru;
     }
 }
