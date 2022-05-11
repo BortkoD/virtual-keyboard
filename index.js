@@ -517,12 +517,35 @@ function btnDown(btn) {
     btn.style.marginTop = "6px";
     btn.style.boxShadow = "0px 0px 0px 0px rgba(0, 0, 0, .2)";
     btn.style.backgroundColor = "#a7cfff";
+
+    let change = false;
+
+    if (btn.classList.contains("CapsLock")) {
+        caps = caps ? false : true;
+        change = true;
+    }
+    else if (btn.classList.contains("ShiftLeft") || btn.classList.contains("ShiftRight")) {
+        shift = true;
+    }
+    else if (btn.classList.contains("AltLeft") || btn.classList.contains("AltRight")) {
+        alt = true;
+    }
+    if (change || shift && alt) generateLayouts();
 }
 
 function btnUp(btn) {
+    if (!btn.classList.contains("CapsLock") || btn.classList.contains("CapsLock") && !caps) {
         btn.style.marginTop = "0px";
         btn.style.boxShadow = "6px 6px 2px 1px rgba(0, 0, 0, .2)";
         btn.style.backgroundColor = "#9cbbf4";
+    }
+
+    if (btn.classList.contains("ShiftLeft") || btn.classList.contains("ShiftRight")) {
+        shift = false;
+    }
+    else if (btn.classList.contains("AltLeft") || btn.classList.contains("AltRight")) {
+        alt = false;
+    }
 }
 
 function generateLayouts() {
